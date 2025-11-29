@@ -12,8 +12,8 @@ load_dotenv()
 setup_logging() 
 
 app = FastAPI(
-    title="Docsum RAG Pipeline API",
-    description="API for the RAG Pipeline technical challenge",
+    title="RAG Based Knowledge Assistant",
+    description="API For RAG Based Knowledge Assistant",
     version="0.1.0",
 )
 

@@ -1,139 +1,207 @@
-# RAG Pipeline Implementation Challenge
+# Retrieval-Augmented Generation (RAG) Pipeline
 
-## Overview
+This repository implements a modular Retrieval-Augmented Generation (RAG) system with a complete ingestion workflow, semantic text chunking, embedding generation, vector search, and multi-turn conversational capabilities. The system is designed with extensibility and maintainability in mind, using FastAPI, SQLAlchemy, and OpenAI models.
 
-At Docsum, we're building an AI-powered document analysis platform that helps users extract insights and answer questions from their document repositories. Your challenge is to implement a Retrieval-Augmented Generation (RAG) pipeline that enables conversational AI interactions with a knowledge base of documents.
+---
 
-## Background
+## Architecture Overview
 
-In our current architecture, documents go through several processing steps:
+The system is composed of independent but connected subsystems:
 
-1. Document upload and parsing
-2. Text extraction and chunking
-3. Embedding generation
-4. Storage in vector database
-5. RAG pipeline for retrieving relevant context and generating responses
+- **Ingestion Pipeline** — loads documents, extracts metadata, chunks text, and generates embeddings.
+- **Vector Search Engine** — performs similarity search using stored embeddings.
+- **Chat Pipeline** — orchestrates multi-turn conversations and optional retrieval.
+- **Knowledge Store** — relational models for documents, chunks, embeddings, conversations, and messages.
+- **API Gateway** — exposes `/ingest`, `/search`, and `/chat` endpoints.
 
-## Requirements
+A high-level architecture diagram is available below:
 
-### Core Requirements
+![High-Level Architecture](docs/HighLevelArchitecturalDiagram.png)
 
-1. Design and implement a RAG pipeline that:
-   - Takes a user query as input
-   - Searches for relevant document chunks
-   - Uses an LLM to generate a coherent answer based on the retrieved context
-   - Returns comprehensive, accurate responses that cite sources from the documents
+> Additional diagrams and design notes are available in the `docs/` directory.
 
-2. Implement appropriate API endpoints that:
-   - Allow for chat functionality (send questions, receive answers with sources)
-   - Support conversation history (maintaining context across multiple queries)
-   - Handle error cases gracefully
+---
 
-3. Include appropriate validation, error handling, and logging
+## Features
 
-4. For this challenge, the API consumer should assume that their documents are already uploaded and processed. The API does not need to support document upload as an endpoint. On startup, load and process the documents from the `sample_data` folder into the database.
+- Document ingestion with metadata and structured storage  
+- Semantic chunking optimized for embedding models  
+- Embedding generation using OpenAI embedding APIs  
+- Vector similarity search over chunked documents  
+- Retrieval-augmented multi-turn chat completion  
+- SQLAlchemy ORM modeling with UUID-based conversation sessions  
+- Modular services layer for easy extension or substitution  
+- RESTful API exposure via FastAPI  
+- Extensible codebase structured for testing and integration
 
-### Technical Constraints
+---
 
-- Use Python for backend implementation.
-- Implement RESTful API endpoints using FastAPI.
-- Follow clean code principles and provide proper documentation. It should be clear how the API should be used without reading the code.
-- Must be compatible with OpenAI's API for LLM integration.
-- No frontend is required.
-- **No RAG Frameworks**: Implement the RAG pipeline from scratch without using frameworks like LangChain, LlamaIndex, or Haystack.
-- **Database Integration**: Use either SQLite or Supabase to store documents, chunks, and metadata.
-- **Vector Storage**: Implement vector storage and similarity search using either SQLite with vector extensions or a simple in-memory solution.
+## Database Schema
 
-### Bonus Objectives
+The schema models the core elements of a RAG system.
 
-- **Database Performance**: Implement database indexing and query optimization for better performance.
-- **Advanced Vector Search**: Implement re-ranking strategies to improve retrieval quality.
-- **Hybrid Search**: Combine vector similarity search with traditional keyword search.
-- **Metrics & Analytics**: Add performance metrics and usage analytics stored in the database.
-- **MCP**: Implement an MCP server that wraps this API so it can be used by other LLM clients.
+### **documents**
+Stores metadata for each ingested source file.
+
+- `id`
+- `name`
+- `path`
+- `created_at`
+- `document_metadata` (JSON)
+
+### **chunks**
+Semantic text chunks with associated embeddings.
+
+- `id`
+- `document_id`
+- `chunk_index`
+- `text`
+- `embedding` (JSON)
+- `created_at`
+- `chunk_metadata` (JSON)
+
+### **conversations**
+Represents a conversational session.
+
+- `id` (UUID)
+- `knowledge_base_id`
+- `created_at`
+
+### **messages**
+Linked to conversations; stores user and assistant messages.
+
+- `id`
+- `conversation_id`
+- `role`
+- `content`
+- `created_at`
+
+Indexing is applied based on common retrieval patterns.
+
+---
+
+## API Endpoints
+
+### **POST /ingest**
+Processes documents and populates the knowledge base.
+
+### **POST /search**
+Performs semantic search over stored document embeddings.
+
+**Request**
+```json
+{
+  "query": "What does clause 7 describe?"
+}
+```
+
+**Response**
+```json
+{
+  "results": [...],
+  "total_found": 5
+}
+```
+
+---
+
+### **POST /chat**
+Generates a conversational response, optionally using retrieved context.
+
+**Request**
+```json
+{
+  "query": "Explain the confidentiality section",
+  "conversation_id": "uuid"
+}
+```
+
+---
 
 ## Project Structure
 
-We've provided a starter project with the following components:
-
-```plaintext
-/rag-pipeline-challenge
-├── /app
-│   ├── /api
-│   │   ├── models.py
-│   │   └── routes.py
-│   ├── /db
-│   │   ├── database.py
-│   │   ├── models.py
-│   │   └── vector_store.py
-│   ├── /services
-│   │   ├── embedding_service.py
-│   │   ├── storage_service.py
-│   │   ├── chunking_service.py
-│   │   └── rag_service.py
-│   └── main.py
-├── /sample_data
-├── /docs
-├── /tests
-├── README.md
-└── requirements.txt
+```
+app/
+  api/                # FastAPI route handlers
+  core/               # Configurations and shared constants
+  db/                 # SQLAlchemy models and database session
+  ingest.py           # Ingestion workflow entry point
+  logging_config.py   # Application-wide logging setup
+  main.py             # FastAPI application bootstrap
+  services/           # Embedding, chunking, retrieval, generation services
+  utils/              # Common utilities
+docs/
+  architecture-diagram.png
+  additional-design-docs.md
+sample_data/
+tests/
+requirements.txt
 ```
 
-## Service Interfaces
+---
 
-We've provided class stubs for the following services that you need to implement:
+## Running Locally
 
-1. **Embedding Service**: Interface for generating embeddings for text chunks
-2. **Chunking Service**: Interface for splitting documents into manageable chunks  
-3. **Storage Service**: Interface for storing and retrieving document metadata and chunks
-4. **RAG Service**: Interface for the retrieval and generation process
+### Install dependencies
+```bash
+pip install -r requirements.txt
+```
 
-**Important**: All service classes contain only method signatures with `# TODO: Implement` stubs. You must implement all functionality from scratch, including:
+### Set environment variables
+Create `app/.env`:
 
-- Database integration for persistent storage
-- Actual embedding generation (you can use OpenAI's embedding API or implement your own)
-- Text chunking
-- Vector similarity search
-- All business logic
+```
+OPENAI_API_KEY=your_api_key_here
+```
 
-## Your Task
+### Run ingestion
+```bash
+python3 -m app.ingest
+```
 
-Your primary tasks are to:
+### Start the API server
+```bash
+uvicorn app.main:app --reload
+```
 
-1. **Database Design**: Create a database schema and implement a data access layer for documents, chunks, and conversations.
-2. **RAG Service**: Design and implement `rag_service.py` to handle the retrieval and generation process.
-3. **Vector Storage**: Implement a vector database interface in `vector_store.py` with similarity search capabilities.
-4. **API Layer**: Build the API routes in `routes.py` to expose your RAG functionality.
-5. **Documentation**: Create architecture diagrams, ERD, and document your design decisions.
+Open API Documentation:
 
-## Evaluation Criteria
+```
+http://localhost:8000/docs
+```
 
-We'll evaluate your submission based on:
+---
 
-1. **Functionality**: Does it work as expected and meet all requirements?
-2. **Code Quality**: Is your code clean, well-structured, and maintainable?
-3. **System Design**: How well have you designed the components and their interactions?
-4. **Error Handling**: How robust is your solution to edge cases and failures?
-5. **Documentation**: How well have you documented your code and design decisions?
-6. **Testing**: Have you included appropriate tests for your implementation?
+## Testing
 
-## Submission Guidelines
+### Run test suite
+```bash
+pytest
+```
 
-1. Clone this repository
-2. Implement your solution
-3. **Required Documentation:**
-   - Include a README in the `docs` folder that explains your approach, design decisions, and setup instructions
-   - **Architecture Diagram**: Create a system architecture diagram showing how components interact
-   - **Entity Relationship Diagram (ERD)**: Design and include an ERD showing your database schema for documents, chunks, conversations, and any other entities
-   - Provide clear code documentation with docstrings and comments
-4. Create a zip file of your solution and submit it via the Google Drive link provided to you.
+### With coverage
+```bash
+pytest --cov=app tests/
+```
 
-## Time Expectation
+---
 
-You have **48 hours** from the time you receive this assignment to complete and submit your solution. We recommend spending 6-8 hours on implementation and 1-2 hours on documentation.
+## Roadmap
 
-## Questions?
+- Integrate a dedicated vector database (FAISS, Qdrant, Weaviate)
+- Add hybrid retrieval (dense + sparse)
+- Stream responses for chat completions
+- Implement ingestion via REST endpoint
+- Add web-based admin dashboard
+- Enhance conversation summarization
 
-If you have any questions or need clarification, please don't hesitate to reach out to us at [founders@docsum.ai](mailto:founders@docsum.ai).
+---
 
-Good luck!
+## License
+MIT License
+
+---
+
+## Author
+**Towseef Altaf**  
+Software Engineer – Distributed Systems, Developer Productivity, AI Engineering
